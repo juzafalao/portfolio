@@ -1,553 +1,591 @@
-<!DOCTYPE html> <html lang="pt-BR"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>LeadCapture Pro - Portfólio Juliana Zafalão</title> <meta name="description" content="Sistema SaaS com IA desenvolvido em 4 semanas por Juliana Zafalão">
-<!-- Open Graph (LinkedIn preview) -->
-<meta property="og:title" content="LeadCapture Pro - SaaS com IA">
-<meta property="og:description" content="De ideia a produto em 9 semanas. Sistema multi-tenant com OpenAI.">
-<meta property="og:image" content="https://seu-dominio.com/logo-share.png">
-<meta property="og:url" content="https://seu-dominio.com">
-
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadCapture Pro - Portfólio Juliana Zafalão</title>
+    <meta name="description" content="Sistema SaaS com IA desenvolvido em 9 semanas por Juliana Zafalão">
     
-    :root {
-        --primary: #ff6b35;
-        --secondary: #3b82f6;
-        --dark: #1a1a1a;
-        --light: #f5f5f5;
-        --accent: #fbbf24;
-    }
+    <!-- Open Graph (LinkedIn preview) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="LeadCapture Pro - Sistema SaaS com IA">
+    <meta property="og:description" content="Sistema multi-tenant desenvolvido em 9 semanas. React, Supabase, OpenAI, n8n. De ideia a produto real.">
+    <meta property="og:image" content="https://juzafalao.github.io/portfolio/screenshot-dashboard.png">
+    <meta property="og:url" content="https://juzafalao.github.io/portfolio/">
+    <meta property="og:site_name" content="Portfólio Juliana Zafalão">
     
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-        line-height: 1.6;
-        color: var(--dark);
-        overflow-x: hidden;
-    }
+    <!-- Twitter Card (LinkedIn também usa) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="LeadCapture Pro - SaaS com IA">
+    <meta name="twitter:description" content="Sistema desenvolvido em 9 semanas com React, Supabase e OpenAI">
+    <meta name="twitter:image" content="https://juzafalao.github.io/portfolio/screenshot-dashboard.png">
     
-    /* Hero Section */
-    .hero {
-        min-height: 100vh;
-        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 2rem;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: 
-            radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
-        pointer-events: none;
-    }
-    
-    .hero-content {
-        max-width: 800px;
-        position: relative;
-        z-index: 1;
-        animation: fadeInUp 1s ease;
-    }
-    
-    .logo-hero {
-        max-width: 400px;
-        margin: 0 auto 2rem;
-        animation: float 3s ease-in-out infinite;
-    }
-    
-    @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-20px); }
-    }
-    
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .hero h1 {
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        margin-bottom: 1rem;
-        font-weight: 700;
-    }
-    
-    .hero .subtitle {
-        font-size: clamp(1rem, 2vw, 1.5rem);
-        color: #fbbf24;
-        margin-bottom: 2rem;
-        font-weight: 500;
-    }
-    
-    .hero .description {
-        font-size: clamp(1rem, 2vw, 1.2rem);
-        margin-bottom: 2rem;
-        opacity: 0.9;
-    }
-    
-    .cta-buttons {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-top: 2rem;
-    }
-    
-    .btn {
-        padding: 1rem 2rem;
-        border: none;
-        border-radius: 8px;
-        font-size: 1.1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        display: inline-block;
-    }
-    
-    .btn-primary {
-        background: var(--primary);
-        color: white;
-    }
-    
-    .btn-primary:hover {
-        background: #e85d2a;
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
-    }
-    
-    .btn-secondary {
-        background: transparent;
-        color: white;
-        border: 2px solid white;
-    }
-    
-    .btn-secondary:hover {
-        background: white;
-        color: var(--dark);
-    }
-    
-    /* Timeline Section */
-    .timeline-section {
-        padding: 5rem 2rem;
-        background: white;
-    }
-    
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-    
-    .section-title {
-        text-align: center;
-        font-size: clamp(2rem, 4vw, 3rem);
-        margin-bottom: 3rem;
-        color: var(--dark);
-    }
-    
-    .timeline {
-        position: relative;
-        max-width: 800px;
-        margin: 0 auto;
-    }
-    
-    .timeline::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 4px;
-        height: 100%;
-        background: linear-gradient(to bottom, var(--primary), var(--secondary));
-    }
-    
-    .timeline-item {
-        margin-bottom: 3rem;
-        position: relative;
-        width: 45%;
-        animation: fadeInLeft 0.8s ease;
-    }
-    
-    .timeline-item:nth-child(even) {
-        margin-left: auto;
-        animation: fadeInRight 0.8s ease;
-    }
-    
-    @keyframes fadeInLeft {
-        from {
-            opacity: 0;
-            transform: translateX(-50px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-    
-    @keyframes fadeInRight {
-        from {
-            opacity: 0;
-            transform: translateX(50px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-    
-    .timeline-content {
-        background: white;
-        padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        border-left: 4px solid var(--primary);
-    }
-    
-    .timeline-item:nth-child(even) .timeline-content {
-        border-left: none;
-        border-right: 4px solid var(--secondary);
-    }
-    
-    .timeline-content h3 {
-        color: var(--primary);
-        margin-bottom: 0.5rem;
-        font-size: 1.5rem;
-    }
-    
-    .timeline-content .period {
-        color: #666;
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-    }
-    
-    /* Stats Section */
-    .stats-section {
-        background: linear-gradient(135deg, var(--primary) 0%, #e85d2a 100%);
-        color: white;
-        padding: 5rem 2rem;
-    }
-    
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 2rem;
-        max-width: 1000px;
-        margin: 0 auto;
-    }
-    
-    .stat-card {
-        text-align: center;
-        padding: 2rem;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        backdrop-filter: blur(10px);
-        transition: transform 0.3s ease;
-    }
-    
-    .stat-card:hover {
-        transform: translateY(-5px);
-    }
-    
-    .stat-number {
-        font-size: 3rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-    
-    .stat-label {
-        font-size: 1rem;
-        opacity: 0.9;
-    }
-    
-    /* Screenshots Section */
-    .screenshots-section {
-        padding: 5rem 2rem;
-        background: var(--light);
-    }
-    
-    .screenshots-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        margin-top: 3rem;
-    }
-    
-    .screenshot-card {
-        background: white;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
-    }
-    
-    .screenshot-card:hover {
-        transform: scale(1.05);
-    }
-    
-    .screenshot-card img {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
-    
-    .screenshot-caption {
-        padding: 1rem;
-        text-align: center;
-        font-weight: 600;
-        color: var(--dark);
-    }
-    
-    /* Tech Stack Section */
-    .tech-section {
-        padding: 5rem 2rem;
-        background: white;
-    }
-    
-    .tech-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 2rem;
-        margin-top: 3rem;
-    }
-    
-    .tech-card {
-        text-align: center;
-        padding: 2rem 1rem;
-        background: var(--light);
-        border-radius: 12px;
-        transition: all 0.3s ease;
-    }
-    
-    .tech-card:hover {
-        background: var(--primary);
-        color: white;
-        transform: translateY(-5px);
-    }
-    
-    .tech-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-    }
-    
-    /* Footer CTA */
-    .footer-cta {
-        background: var(--dark);
-        color: white;
-        padding: 5rem 2rem;
-        text-align: center;
-    }
-    
-    .footer-cta h2 {
-        font-size: clamp(1.5rem, 3vw, 2.5rem);
-        margin-bottom: 2rem;
-    }
-    
-    /* Responsive */
-    @media (max-width: 768px) {
-        .timeline::before {
-            left: 0;
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
-        .timeline-item,
-        .timeline-item:nth-child(even) {
-            width: 100%;
-            margin-left: 2rem;
+        :root {
+            --primary: #ff6b35;
+            --secondary: #3b82f6;
+            --dark: #1a1a1a;
+            --light: #f5f5f5;
+            --accent: #fbbf24;
         }
-    }
-</style>
-</head> <body> <!-- Hero Section --> <section class="hero"> <div class="hero-content"> <img src="logo-dark.png" alt="LeadCapture Pro" class="logo-hero"> <h1>De Ideia a Produto em 9 Semanas</h1> <p class="subtitle">5 semanas estudando + 4 semanas desenvolvendo</p> <p class="description"> Sistema SaaS multi-tenant com Inteligência Artificial para captura e qualificação automática de leads. Do conceito ao deploy em produção. </p> <div class="cta-buttons"> <a href="https://leadcapture-pro.vercel.app" class="btn btn-primary" target="_blank"> Ver Demo ao Vivo → </a> <a href="https://github.com/juzafalao/leadcapture-pro" class="btn btn-secondary" target="_blank"> Código no GitHub </a> </div> </div> </section>
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .logo-hero {
+            max-width: 400px;
+            margin: 0 auto 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .hero .subtitle {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            color: #fbbf24;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+        
+        .hero .description {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #e85d2a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--dark);
+        }
+        
+        /* Timeline Section */
+        .timeline-section {
+            padding: 5rem 2rem;
+            background: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 3rem;
+            color: var(--dark);
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+        
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+            width: 45%;
+            animation: fadeInLeft 0.8s ease;
+        }
+        
+        .timeline-item:nth-child(even) {
+            margin-left: auto;
+            animation: fadeInRight 0.8s ease;
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            border-left: none;
+            border-right: 4px solid var(--secondary);
+        }
+        
+        .timeline-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .timeline-content .period {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, var(--primary) 0%, #e85d2a 100%);
+            color: white;
+            padding: 5rem 2rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        /* Screenshots Section */
+        .screenshots-section {
+            padding: 5rem 2rem;
+            background: var(--light);
+        }
+        
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .screenshot-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .screenshot-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .screenshot-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .screenshot-caption {
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        /* Tech Stack Section */
+        .tech-section {
+            padding: 5rem 2rem;
+            background: white;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .tech-card {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: var(--light);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .tech-card:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-5px);
+        }
+        
+        .tech-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Footer CTA */
+        .footer-cta {
+            background: var(--dark);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+        
+        .footer-cta h2 {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: 2rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 0;
+            }
+            
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                width: 100%;
+                margin-left: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <img src="https://juzafalao.github.io/portfolio/logo-dark.png" alt="LeadCapture Pro" class="logo-hero">
+            <h1>De Ideia a Produto em 9 Semanas</h1>
+            <p class="subtitle">5 semanas estudando + 4 semanas desenvolvendo</p>
+            <p class="description">
+                Sistema SaaS multi-tenant com Inteligência Artificial para captura e qualificação automática de leads.
+                Do conceito ao deploy em produção.
+            </p>
+            <div class="cta-buttons">
+                <a href="https://leadcapture-pro.vercel.app" class="btn btn-primary" target="_blank">
+                    Ver Demo ao Vivo →
+                </a>
+                <a href="https://github.com/juzafalao/leadcapture-pro" class="btn btn-secondary" target="_blank">
+                    Código no GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Timeline Section -->
-<section class="timeline-section">
-    <div class="container">
-        <h2 class="section-title">🚀 Jornada de Desenvolvimento</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>📚 Fase 1: Estudo</h3>
-                    <p class="period">Semanas 1-5</p>
-                    <p>Aprendizado intensivo de tecnologias SaaS: React, TypeScript, Supabase (PostgreSQL com RLS), n8n, OpenAI API, arquitetura multi-tenant.</p>
+    <section class="timeline-section">
+        <div class="container">
+            <h2 class="section-title">🚀 Jornada de Desenvolvimento</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>📚 Fase 1: Estudo</h3>
+                        <p class="period">Semanas 1-5</p>
+                        <p>Aprendizado intensivo de tecnologias SaaS: React, TypeScript, Supabase (PostgreSQL com RLS), n8n, OpenAI API, arquitetura multi-tenant.</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>🏗️ Fase 2: Arquitetura</h3>
-                    <p class="period">Semana 6</p>
-                    <p>Modelagem do banco de dados (16 tabelas relacionadas), definição de fluxos, estruturação do projeto e escolha da stack técnica.</p>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>🏗️ Fase 2: Arquitetura</h3>
+                        <p class="period">Semana 6</p>
+                        <p>Modelagem do banco de dados (16 tabelas relacionadas), definição de fluxos, estruturação do projeto e escolha da stack técnica.</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>💻 Fase 3: Desenvolvimento</h3>
-                    <p class="period">Semanas 7-8</p>
-                    <p>Implementação do dashboard React, integração Supabase, sistema de autenticação RBAC, workflow n8n com OpenAI para scoring de leads.</p>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>💻 Fase 3: Desenvolvimento</h3>
+                        <p class="period">Semanas 7-8</p>
+                        <p>Implementação do dashboard React, integração Supabase, sistema de autenticação RBAC, workflow n8n com OpenAI para scoring de leads.</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>🚀 Fase 4: Deploy</h3>
-                    <p class="period">Semana 9</p>
-                    <p>Testes end-to-end, correções de bugs, otimizações de performance, deploy em produção (Vercel + Supabase) e documentação completa.</p>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>🚀 Fase 4: Deploy</h3>
+                        <p class="period">Semana 9</p>
+                        <p>Testes end-to-end, correções de bugs, otimizações de performance, deploy em produção (Vercel + Supabase) e documentação completa.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Stats Section -->
-<section class="stats-section">
-    <div class="container">
-        <h2 class="section-title" style="color: white;">📊 Números do Projeto</h2>
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">9</div>
-                <div class="stat-label">Semanas (Total)</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">16</div>
-                <div class="stat-label">Tabelas no Banco</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">13</div>
-                <div class="stat-label">Nodes n8n</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">52</div>
-                <div class="stat-label">Leads de Teste</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">&lt;5s</div>
-                <div class="stat-label">Tempo de Resposta</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">99.9%</div>
-                <div class="stat-label">Uptime</div>
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">📊 Números do Projeto</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">9</div>
+                    <div class="stat-label">Semanas (Total)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">16</div>
+                    <div class="stat-label">Tabelas no Banco</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">13</div>
+                    <div class="stat-label">Nodes n8n</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">52</div>
+                    <div class="stat-label">Leads de Teste</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">&lt;5s</div>
+                    <div class="stat-label">Tempo de Resposta</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Screenshots Section -->
-<section class="screenshots-section">
-    <div class="container">
-        <h2 class="section-title">📸 Sistema em Ação</h2>
-        <div class="screenshots-grid">
-            <div class="screenshot-card">
-                <img src="screenshot-login.png" alt="Tela de Login">
-                <div class="screenshot-caption">Login com Autenticação Segura</div>
-            </div>
-            <div class="screenshot-card">
-                <img src="screenshot-dashboard.png" alt="Dashboard">
-                <div class="screenshot-caption">Dashboard com Métricas Real-time</div>
-            </div>
-            <div class="screenshot-card">
-                <img src="arquitetura.png" alt="Arquitetura">
-                <div class="screenshot-caption">Arquitetura do Sistema</div>
+    <!-- Screenshots Section -->
+    <section class="screenshots-section">
+        <div class="container">
+            <h2 class="section-title">📸 Sistema em Ação</h2>
+            <div class="screenshots-grid">
+                <div class="screenshot-card">
+                    <img src="https://juzafalao.github.io/portfolio/screenshot-login.png" alt="Tela de Login">
+                    <div class="screenshot-caption">Login com Autenticação Segura</div>
+                </div>
+                <div class="screenshot-card">
+                    <img src="https://juzafalao.github.io/portfolio/screenshot-dashboard.png" alt="Dashboard">
+                    <div class="screenshot-caption">Dashboard com Métricas Real-time</div>
+                </div>
+                <div class="screenshot-card">
+                    <img src="https://juzafalao.github.io/portfolio/arquitetura.png" alt="Arquitetura">
+                    <div class="screenshot-caption">Arquitetura do Sistema</div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Tech Stack Section -->
-<section class="tech-section">
-    <div class="container">
-        <h2 class="section-title">🛠️ Stack Tecnológica</h2>
-        <div class="tech-grid">
-            <div class="tech-card">
-                <div class="tech-icon">⚛️</div>
-                <div>React + TS</div>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">🗄️</div>
-                <div>Supabase</div>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">🤖</div>
-                <div>OpenAI GPT-4o</div>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">⚙️</div>
-                <div>n8n</div>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">📱</div>
-                <div>Twilio</div>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">🚀</div>
-                <div>Vercel</div>
+    <!-- Tech Stack Section -->
+    <section class="tech-section">
+        <div class="container">
+            <h2 class="section-title">🛠️ Stack Tecnológica</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <div class="tech-icon">⚛️</div>
+                    <div>React + TS</div>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🗄️</div>
+                    <div>Supabase</div>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🤖</div>
+                    <div>OpenAI GPT-4o</div>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">⚙️</div>
+                    <div>n8n</div>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">📱</div>
+                    <div>Twilio</div>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🚀</div>
+                    <div>Vercel</div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Footer CTA -->
-<section class="footer-cta">
-    <h2>Quer saber mais sobre o desenvolvimento?</h2>
-    <p style="margin-bottom: 2rem; font-size: 1.2rem;">Entre em contato ou teste o sistema</p>
-    <div class="cta-buttons">
-        <a href="https://linkedin.com/in/juzafalao" class="btn btn-primary" target="_blank">
-            LinkedIn
-        </a>
-        <a href="mailto:juzafalao@gmail.com" class="btn btn-secondary">
-            Email
-        </a>
-    </div>
-    <p style="margin-top: 3rem; opacity: 0.7;">
-        © 2026 Juliana Zafalão • Desenvolvido com ❤️ e ☕
-    </p>
-</section>
+    <!-- Footer CTA -->
+    <section class="footer-cta">
+        <h2>Quer saber mais sobre o desenvolvimento?</h2>
+        <p style="margin-bottom: 2rem; font-size: 1.2rem;">Entre em contato ou teste o sistema</p>
+        <div class="cta-buttons">
+            <a href="https://linkedin.com/in/julianazafalao" class="btn btn-primary" target="_blank">
+                LinkedIn
+            </a>
+            <a href="mailto:juzafalao@gmail.com" class="btn btn-secondary">
+                Email
+            </a>
+        </div>
+        <p style="margin-top: 3rem; opacity: 0.7;">
+            © 2026 Juliana Zafalão • Desenvolvido com ❤️ e ☕
+        </p>
+    </section>
 
-<script>
-    // Animação de scroll suave
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
+    <script>
+        // Animação de scroll suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
-    });
 
-    // Animação de entrada dos elementos
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
+        // Animação de entrada dos elementos
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item, .stat-card, .screenshot-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
         });
-    }, observerOptions);
-
-    document.querySelectorAll('.timeline-item, .stat-card, .screenshot-card').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'all 0.6s ease';
-        observer.observe(el);
-    });
-</script>
-</body> </html> 
+    </script>
+</body>
+</html>
